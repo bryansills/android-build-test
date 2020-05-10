@@ -2,8 +2,6 @@ name: CI
 
 on:
   push:
-    branches:
-      - master
     tags:
       - '*.*.*'
   pull_request:
@@ -16,8 +14,8 @@ jobs:
 
     steps:
       - name: Set version name
-        run: echo ::set-env name=ORG_GRADLE_PROJECT_VERSION_NAME::${GITHUB_REF:10}
-        
+        run: echo ::set-env name=ORG_GRADLE_PROJECT_VERSION_NAME::${GITHUB_REF:11}
+
       - name: set up JDK
         uses: actions/setup-java@v1
         with:
