@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       ORG_GRADLE_PROJECT_FAKE_KEY: ${{ secrets.FAKE_KEY }}
-      ORG_GRADLE_PROJECT_VERSION_NAME_FULL: ${{ GITHUB_REF }}
+      ORG_GRADLE_PROJECT_VERSION_NAME_FULL: ${{ github.ref }}
       ORG_GRADLE_PROJECT_VERSION_NAME: ${{ GITHUB_REF##*/ }}
 
     steps:
