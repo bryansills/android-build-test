@@ -13,10 +13,11 @@ jobs:
     runs-on: ubuntu-latest
     env:
       ORG_GRADLE_PROJECT_FAKE_KEY: ${{ secrets.FAKE_KEY }}
-      ORG_GRADLE_PROJECT_VERSION_NAME_FULL: ${{ github.ref }}
-      ORG_GRADLE_PROJECT_VERSION_NAME: ${{ GITHUB_REF##*/ }}
 
     steps:
+      - name: Set version name
+        run: echo ::set-env name=ORG_GRADLE_PROJECT_VERSION_NAME::${GITHUB_REF:10}
+        
       - name: set up JDK
         uses: actions/setup-java@v1
         with:
