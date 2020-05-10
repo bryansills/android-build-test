@@ -4,6 +4,8 @@ on:
   push:
     branches:
       - master
+    tags:
+      - '*.*.*'
   pull_request:
 
 jobs:
@@ -11,6 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       ORG_GRADLE_PROJECT_FAKE_KEY: ${{ secrets.FAKE_KEY }}
+      ORG_GRADLE_PROJECT_VERSION_NAME: ${{ GITHUB_REF:10 }}
 
     steps:
       - name: set up JDK

@@ -2,6 +2,10 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 
+def appVersionName = propOrDef('VERSION_NAME', "0.0.1")
+def (versionMajor, versionMinor, versionPatch) = appVersionName.tokenize(".").collect { it as Integer }
+def appVersionCode = (versionMajor * 1000) + (versionMinor * 100) + versionPatch
+
 android {
     compileSdkVersion 29
     buildToolsVersion "29.0.2"
@@ -10,8 +14,8 @@ android {
         applicationId "ninja.bryansills.bob"
         minSdkVersion 21
         targetSdkVersion 29
-        versionCode 1
-        versionName "1.0"
+        versionCode appVersionCode
+        versionName appVersionName
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
