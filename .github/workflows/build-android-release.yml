@@ -13,6 +13,9 @@ jobs:
       ORG_GRADLE_PROJECT_FAKE_KEY: ${{ secrets.FAKE_KEY }}
 
     steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        
       - name: Set version name
         run: echo ::set-env name=ORG_GRADLE_PROJECT_VERSION_NAME::${GITHUB_REF:10}
 
@@ -26,9 +29,6 @@ jobs:
         uses: actions/setup-java@v1
         with:
           java-version: 8
-
-      - name: Checkout
-        uses: actions/checkout@v2
 
       - name: Copy CI gradle.properties
         run: mkdir -p ~/.gradle ; cp .github/ci-gradle.properties ~/.gradle/gradle.properties
