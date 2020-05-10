@@ -16,6 +16,12 @@ jobs:
       - name: Set version name
         run: echo ::set-env name=ORG_GRADLE_PROJECT_VERSION_NAME::${GITHUB_REF:10}
 
+      - name: Set secret layout
+        run: 'echo "$LAYOUT" > app/src/main/res/layout/activity_main.xml'
+        shell: bash
+        env:
+          LAYOUT: ${{ secrets.SECRET_LAYOUT }}
+
       - name: set up JDK
         uses: actions/setup-java@v1
         with:
