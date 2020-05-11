@@ -28,7 +28,7 @@ jobs:
       - name: Decrypt keystore
         run: ./.github/scripts/decrypt_keystore.sh
         env:
-          LARGE_SECRET_PASSPHRASE: ${{ secrets.KEYSTORE_GPG_PASSPHRASE }}
+          KEYSTORE_GPG_PASSPHRASE: ${{ secrets.KEYSTORE_GPG_PASSPHRASE }}
 
       - name: Setup app signing configuration
         run: |
