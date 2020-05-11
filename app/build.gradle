@@ -6,6 +6,13 @@ def appVersionName = propOrDef('VERSION_NAME', "0.0.1")
 def (versionMajor, versionMinor, versionPatch) = appVersionName.tokenize(".").collect { it as Integer }
 def appVersionCode = (versionMajor * 1000) + (versionMinor * 100) + versionPatch
 
+def useReleaseKeystore = rootProject.file("release/keystore.properties").exists()
+def keystoreProperties = new Properties()
+if (useReleaseKeystore) {
+    def keystorePropertiesFile = rootProject.file("release/keystore.properties")
+    keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+}
+
 android {
     compileSdkVersion 29
     buildToolsVersion "29.0.2"
@@ -22,13 +29,24 @@ android {
         manifestPlaceholders = [fakeKey: propOrDef('FAKE_KEY', "")]
     }
 
+    signingConfigs {
+        release {
+            if (useReleaseKeystore) {
+                keyAlias keystoreProperties['keyAlias']
+                keyPassword keystoreProperties['keyPassword']
+                storeFile rootProject.file(keystoreProperties['storeFile'])
+                storePassword keystoreProperties['storePassword']
+            }
+        }
+    }
+
     buildTypes {
         release {
+            signingConfig signingConfigs.release
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
-
 }
 
 dependencies {

@@ -15,7 +15,7 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-        
+
       - name: Set version name
         run: echo ::set-env name=ORG_GRADLE_PROJECT_VERSION_NAME::${GITHUB_REF:10}
 
@@ -24,6 +24,15 @@ jobs:
         shell: bash
         env:
           LAYOUT: ${{ secrets.SECRET_LAYOUT }}
+
+      - name: Setup app signing
+        run: |
+          mkdir release
+          echo "$KEYSTORE" > release/release.jks
+          echo "$KEYSTORE_PROPERTIES" > release/keystore.properties
+        env:
+          KEYSTORE: ${{ secrets.KEYSTORE }}
+          KEYSTORE_PROPERTIES: ${{ secrets.KEYSTORE_PROPERTIES }}
 
       - name: set up JDK
         uses: actions/setup-java@v1
@@ -37,7 +46,7 @@ jobs:
         uses: gradle/wrapper-validation-action@v1
 
       - name: Build and check
-        run: ./gradlew assembleDebug --stacktrace
+        run: ./gradlew :app:bundleRelease --stacktrace
 
       - name: Upload build outputs
         if: always()
