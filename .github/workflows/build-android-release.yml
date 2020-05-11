@@ -25,13 +25,16 @@ jobs:
         env:
           LAYOUT: ${{ secrets.SECRET_LAYOUT }}
 
-      - name: Setup app signing
+      - name: Decrypt keystore
+        run: ./.github/scripts/decrypt_keystore.sh
+        env:
+          LARGE_SECRET_PASSPHRASE: ${{ secrets.KEYSTORE_GPG_PASSPHRASE }}
+
+      - name: Setup app signing configuration
         run: |
           mkdir release
-          echo "$KEYSTORE" > release/upload.jks
           echo "$KEYSTORE_PROPERTIES" > release/keystore.properties
         env:
-          KEYSTORE: ${{ secrets.KEYSTORE }}
           KEYSTORE_PROPERTIES: ${{ secrets.KEYSTORE_PROPERTIES }}
 
       - name: set up JDK
