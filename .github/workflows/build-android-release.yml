@@ -28,7 +28,7 @@ jobs:
       - name: Setup app signing
         run: |
           mkdir release
-          echo "$KEYSTORE" > release/release.jks
+          echo "$KEYSTORE" > release/upload.jks
           echo "$KEYSTORE_PROPERTIES" > release/keystore.properties
         env:
           KEYSTORE: ${{ secrets.KEYSTORE }}
