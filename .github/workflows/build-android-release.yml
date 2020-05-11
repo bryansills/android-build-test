@@ -31,9 +31,7 @@ jobs:
           KEYSTORE_GPG_PASSPHRASE: ${{ secrets.KEYSTORE_GPG_PASSPHRASE }}
 
       - name: Setup app signing configuration
-        run: |
-          mkdir release
-          echo "$KEYSTORE_PROPERTIES" > release/keystore.properties
+        run: 'echo "$KEYSTORE_PROPERTIES" > release/keystore.properties'
         env:
           KEYSTORE_PROPERTIES: ${{ secrets.KEYSTORE_PROPERTIES }}
 
