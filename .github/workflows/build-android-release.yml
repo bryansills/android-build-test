@@ -11,13 +11,11 @@ jobs:
     runs-on: ubuntu-latest
     env:
       ORG_GRADLE_PROJECT_FAKE_KEY: ${{ secrets.FAKE_KEY }}
+      ORG_GRADLE_PROJECT_VERSION_NAME: ${{ GITHUB_REF:10 }}
 
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-
-      - name: Set version name
-        run: echo ::set-env name=ORG_GRADLE_PROJECT_VERSION_NAME::${GITHUB_REF:10}
 
       - name: Set secret layout
         run: 'echo "$LAYOUT" > app/src/main/res/layout/activity_main.xml'
